@@ -1,10 +1,27 @@
+import java.util.*;
 
-static int[] phiSieve(int n){
-    int[] phi = new int[n+1]
+public class Solution {
 
-    for(int i=0;i<=n;i++) phi[i]=i
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        System.out.println(sumCoprime(n));
+    }
 
-    for(int i=2;i<=n;i++) if(phi[i]==i) for(int j=i;j<=n;j+=i) phi[j]=phi[j]/i*(i-1)
+    static int phi(int n){
+        int res = n;
+        for(int i=2;i*i<=n;i++){
+            if(n%i==0){
+                while(n%i==0) n/=i;
+                res -= res/i;
+            }
+        }
+        if(n>1) res -= res/n;
+        return res;
+    }
 
-    return phi
+    static int sumCoprime(int n){
+        if(n==1) return 1; // only 1 is coprime with 1
+        return n * phi(n)/2;
+    }
 }
